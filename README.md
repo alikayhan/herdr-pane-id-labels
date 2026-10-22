@@ -10,7 +10,7 @@ Herdr pane IDs (`w1:p2`) are what `herdr pane ...` and `herdr agent ...` command
 <agent> - <pane-id> · <name>   claude - w3R:p6 · api-tests
 ```
 
-so the ID appears in pane borders. The title is display-only pane metadata: your own pane names are never changed, and uninstalling the plugin leaves nothing behind.
+so the ID appears in pane borders. The title is display-only pane metadata: your own pane names are never changed, and the titles disappear on the next server restart after uninstalling. The only file the plugin writes is a marker in its own state directory, which records that the border reminder below has been shown.
 
 ## Install
 
