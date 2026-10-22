@@ -1,0 +1,36 @@
+id = "alikayhan.pane-id-labels"
+name = "Pane ID labels"
+version = "0.1.0"
+min_herdr_version = "0.9.0"
+description = "Show each pane's Herdr pane ID in its border title (\"claude - w1:p2\") and copy it with a keybinding"
+platforms = ["macos", "linux"]
+
+# Retitle every pane on server start (metadata is not persisted) and whenever
+# a pane is created, moved (cross-workspace moves assign a new ID), or gains
+# or loses an agent.
+[[startup]]
+command = ["bash", "label-panes.sh"]
+
+[[events]]
+on = "pane.created"
+command = ["bash", "label-panes.sh"]
+
+[[events]]
+on = "pane.moved"
+command = ["bash", "label-panes.sh"]
+
+[[events]]
+on = "pane.agent_detected"
+command = ["bash", "label-panes.sh"]
+
+[[actions]]
+id = "relabel"
+title = "Relabel panes with their IDs"
+contexts = ["workspace"]
+command = ["bash", "label-panes.sh"]
+
+[[actions]]
+id = "copy-id"
+title = "Copy pane ID"
+contexts = ["pane", "workspace"]
+command = ["bash", "copy-id.sh"]
