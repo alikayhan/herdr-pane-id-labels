@@ -51,3 +51,7 @@ Then run `herdr server reload-config` and detach and reattach the client (`prefi
 herdr plugin link /path/to/herdr-pane-id-labels
 herdr plugin log list --plugin alikayhan.pane-id-labels
 ```
+
+## License
+
+[MIT](LICENSE)
