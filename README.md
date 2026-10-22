@@ -20,7 +20,7 @@ Requires `jq`, plus a clipboard tool for the copy action: `pbcopy` (macOS) or `w
 herdr plugin install alikayhan/herdr-pane-id-labels
 ```
 
-Titles are applied on the next Herdr server start and refreshed automatically when panes are created, moved, or gain or lose an agent. To apply them right away, or after renaming a pane:
+Titles are applied on the next Herdr server start and refreshed automatically when panes are created or moved and when an agent is detected, changes status, or exits. To apply them right away, or after renaming a pane:
 
 ```bash
 herdr plugin action invoke alikayhan.pane-id-labels.relabel
@@ -42,7 +42,8 @@ Then run `herdr server reload-config` and detach and reattach the client (`prefi
 
 ## Tips
 
-- Single-pane workspaces have no border by default, so the title is hidden there. Set `pane_borders = "always"` under `[ui]` to always show it.
+- Single-pane workspaces have no border by default, so the title is hidden there. Set `pane_borders = "always"` under `[ui]` to always show it. The plugin shows this reminder once as a toast on server start if the setting is not on; it never edits your config.
+- Herdr caps titles at 80 characters, so very long pane names are cut off.
 - Herdr's pane right-click menu is hard-coded as of 0.9.5, so the copy action cannot appear there; use the keybinding.
 
 ## Development

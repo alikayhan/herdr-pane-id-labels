@@ -6,10 +6,13 @@ description = "Show each pane's Herdr pane ID in its border title (\"claude - w1
 platforms = ["macos", "linux"]
 
 # Retitle every pane on server start (metadata is not persisted) and whenever
-# a pane is created, moved (cross-workspace moves assign a new ID), or gains
-# or loses an agent.
+# a pane is created, moved (cross-workspace moves assign a new ID), or its
+# agent appears, changes status, or exits.
 [[startup]]
 command = ["bash", "label-panes.sh"]
+
+[[startup]]
+command = ["bash", "border-hint.sh"]
 
 [[events]]
 on = "pane.created"
@@ -21,6 +24,14 @@ command = ["bash", "label-panes.sh"]
 
 [[events]]
 on = "pane.agent_detected"
+command = ["bash", "label-panes.sh"]
+
+[[events]]
+on = "pane.agent_status_changed"
+command = ["bash", "label-panes.sh"]
+
+[[events]]
+on = "pane.exited"
 command = ["bash", "label-panes.sh"]
 
 [[actions]]
