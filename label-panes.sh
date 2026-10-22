@@ -8,6 +8,13 @@
 set -u
 herdr="${HERDR_BIN_PATH:-herdr}"
 
+# Status flips (idle/working/blocked/done) never change a title; only the
+# agent disappearing does, which Herdr reports as status "unknown".
+if [ "${HERDR_PLUGIN_EVENT:-}" = "pane.agent_status_changed" ] \
+   && ! [[ "${HERDR_PLUGIN_EVENT_JSON:-}" =~ \"agent_status\"[[:space:]]*:[[:space:]]*\"unknown\" ]]; then
+  exit 0
+fi
+
 "$herdr" pane list 2>/dev/null \
   | jq -r '.result.panes[]
            | [.pane_id, (.display_agent // .agent // ""), (.label // ""), (.title // "")]
