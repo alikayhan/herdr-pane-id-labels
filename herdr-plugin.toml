@@ -5,9 +5,9 @@ min_herdr_version = "0.9.0"
 description = "Show each pane's Herdr pane ID in its border title (\"claude - w1:p2\") and copy it with a keybinding"
 platforms = ["macos", "linux"]
 
-# Retitle every pane on server start (metadata is not persisted) and whenever
-# a pane is created, moved (cross-workspace moves assign a new ID), or gains
-# or loses an agent.
+# Titles are not persisted across server restarts. Cross-workspace moves
+# assign a new ID. Herdr has no agent-lost event, so status changes and pane
+# exits stand in for it.
 [[startup]]
 command = ["bash", "label-panes.sh"]
 
@@ -22,6 +22,17 @@ command = ["bash", "label-panes.sh"]
 [[events]]
 on = "pane.agent_detected"
 command = ["bash", "label-panes.sh"]
+
+[[events]]
+on = "pane.agent_status_changed"
+command = ["bash", "label-panes.sh"]
+
+[[events]]
+on = "pane.exited"
+command = ["bash", "label-panes.sh"]
+
+[[startup]]
+command = ["bash", "border-hint.sh"]
 
 [[actions]]
 id = "relabel"

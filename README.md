@@ -10,7 +10,7 @@ Herdr pane IDs (`w1:p2`) are what `herdr pane ...` and `herdr agent ...` command
 <agent> - <pane-id> · <name>   claude - w3R:p6 · api-tests
 ```
 
-so the ID appears in pane borders. The title is display-only pane metadata: your own pane names are never changed, and uninstalling the plugin leaves nothing behind.
+so the ID appears in pane borders. The title is display-only pane metadata: your own pane names are never changed, and the titles disappear on the next server restart after uninstalling. The only file the plugin writes is a marker in its own state directory, which records that the border reminder below has been shown.
 
 ## Install
 
@@ -20,7 +20,7 @@ Requires `jq`, plus a clipboard tool for the copy action: `pbcopy` (macOS) or `w
 herdr plugin install alikayhan/herdr-pane-id-labels
 ```
 
-Titles are applied on the next Herdr server start and refreshed automatically when panes are created, moved, or gain or lose an agent. To apply them right away, or after renaming a pane:
+Titles are applied on the next Herdr server start and refreshed automatically as panes and agents change. To apply them right away, or after renaming a pane:
 
 ```bash
 herdr plugin action invoke alikayhan.pane-id-labels.relabel
@@ -42,7 +42,8 @@ Then run `herdr server reload-config` and detach and reattach the client (`prefi
 
 ## Tips
 
-- Single-pane workspaces have no border by default, so the title is hidden there. Set `pane_borders = "always"` under `[ui]` to always show it.
+- Single-pane workspaces have no border by default, so the title is hidden there. Set `pane_borders = "always"` under `[ui]` to always show it. The plugin toasts this reminder once on server start if the setting is off.
+- Herdr caps titles at 80 characters, so very long pane names are cut off.
 - Herdr's pane right-click menu is hard-coded as of 0.9.5, so the copy action cannot appear there; use the keybinding.
 
 ## Development
@@ -51,3 +52,7 @@ Then run `herdr server reload-config` and detach and reattach the client (`prefi
 herdr plugin link /path/to/herdr-pane-id-labels
 herdr plugin log list --plugin alikayhan.pane-id-labels
 ```
+
+## License
+
+[MIT](LICENSE)
